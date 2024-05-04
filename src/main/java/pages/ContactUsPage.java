@@ -10,8 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class ContactUsPage {
-    private WebDriver driver;
+public class ContactUsPage extends BasePage {
     private By emailField = By.id(ContactUsPageConstants.EMAIL_FIELD_ID);
     private By nameField = By.id(ContactUsPageConstants.NAME_FIELD_ID);
     private By messageField = By.id(ContactUsPageConstants.MESSAGE_FIELD_ID);
@@ -19,28 +18,23 @@ public class ContactUsPage {
 
 
     public ContactUsPage(WebDriver driver){
-        this.driver = driver;
+        super(driver);
     }
 
-    public String fillCredentials(String email, String name, String message){
-        WebElement clickEmailField = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(emailField));
-        clickEmailField.sendKeys(email);
+    public void fillCredentials(String email, String name, String message){
+        WebElement emailElement = driver.findElement(emailField);
+        WebElement nameElement = driver.findElement(nameField);
+        WebElement messageElement = driver.findElement(messageField);
 
-        WebElement clickNameField = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(nameField));
-        clickNameField.sendKeys(name);
-        WebElement clickMessageField = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(messageField));
-        clickMessageField.sendKeys(message);
+        setInputText(emailElement, email);
+        setInputText(nameElement, name);
+        setInputText(messageElement, message);
 
-        WebElement sendMessageButton = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(sendButton));
-        sendMessageButton.click();
+        clickElement(driver.findElement(sendButton));
+    }
 
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
-
-        Alert alert = driver.switchTo().alert();
+    public String getAlertText(){
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
         String alertText = alert.getText();
         alert.accept();
 

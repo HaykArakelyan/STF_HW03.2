@@ -9,7 +9,8 @@ public class ContactUsPageTest extends BaseTest{
     @Test
     public void testSendContactUsMessage(){
         ContactUsPage contactUsPage = homePage.openContactUsForm();
-        String message = contactUsPage.fillCredentials("abc", "abc", "abc");
+        contactUsPage.fillCredentials("abc", "abc", "abc");
+        String message = contactUsPage.getAlertText();
         Assert.assertTrue(message.contains("Thanks for the message"));
     }
 }

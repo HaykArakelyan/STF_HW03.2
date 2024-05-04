@@ -2,7 +2,6 @@ package tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.LoginPage;
 import pages.MonitorsPage;
 import pages.ProductPage;
 
@@ -20,7 +19,8 @@ public class ProductTest extends BaseTest {
     public void testAddToCart(){
         MonitorsPage monitorsPage = homePage.clickMonitorCategory();
         ProductPage productPage = monitorsPage.openTheFirstProduct();
-        String message = productPage.clickAddToCartButton();
+        productPage.clickAddToCartButton();
+        String message = productPage.getAlertText();
         Assert.assertTrue(message.contains("Product added"));
     }
 }

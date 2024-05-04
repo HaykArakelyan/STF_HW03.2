@@ -11,11 +11,13 @@ public class AllPOMTests extends BaseTest{
     @Test
     public void runAllTest(){
         LoginPage loginPage = homePage.openLoginFrom();
-        String message = loginPage.fillInvalidCredentials("aua_sft", "invalidPassword");
+        loginPage.fillCredentials("aua_sft", "invalidPassword");
+        String message = loginPage.getAlertText();
         Assert.assertTrue(message.contains("Wrong password"));
 
         homePage.openLoginFrom();
-        String userName = loginPage.fillValidCredentials("aua_sft", "VeryGoodPassword12!");
+        loginPage.fillCredentials("aua_sft", "VeryGoodPassword12!");
+        String userName = loginPage.getNameOfUser();
         Assert.assertTrue(userName.contains("aua_sft"));
 
         int numberOfElements = homePage.getNumberOfProductFirstPage();
@@ -33,11 +35,13 @@ public class AllPOMTests extends BaseTest{
         String productTitle = productPage.getProductTitle();
         Assert.assertTrue(productTitle.contains("Apple monitor 24"));
 
-        String addToCardMessage = productPage.clickAddToCartButton();
+        productPage.clickAddToCartButton();
+        String addToCardMessage = productPage.getAlertText();
         Assert.assertTrue(addToCardMessage.contains(("Product added")));
 
         ContactUsPage contactUsPage = homePage.openContactUsForm();
-        String contactMessage = contactUsPage.fillCredentials("abc", "abc", "abc");
+        contactUsPage.fillCredentials("abc", "abc", "abc");
+        String contactMessage = contactUsPage.getAlertText();
         Assert.assertTrue(contactMessage.contains("Thanks for the message"));
     }
 }

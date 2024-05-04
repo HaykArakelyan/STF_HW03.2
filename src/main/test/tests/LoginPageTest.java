@@ -8,13 +8,15 @@ public class LoginPageTest extends BaseTest {
     @Test
     public void testFailLogIn(){
         LoginPage loginPage = homePage.openLoginFrom();
-        String alertMessage = loginPage.fillInvalidCredentials("aua_sft", "invalidPassword");
+        loginPage.fillCredentials("aua_sft", "invalidPassword");
+        String alertMessage = loginPage.getAlertText();
         Assert.assertTrue(alertMessage.contains("Wrong password"));
     }
     @Test
     public void testSuccessfulLogIn(){
         LoginPage loginPage = homePage.openLoginFrom();
-        String nameOfUser = loginPage.fillValidCredentials("aua_sft", "VeryGoodPassword12!");
+        loginPage.fillCredentials("aua_sft", "VeryGoodPassword12!");
+        String nameOfUser = loginPage.getNameOfUser();
         Assert.assertTrue(nameOfUser.contains("aua_sft"));
     }
 }

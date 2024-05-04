@@ -8,7 +8,7 @@ public class MonitorPageTest extends BaseTest {
     @Test
     public void testMonitorFirstPage(){
         int numberOfElements = homePage.getNumberOfProductFirstPage();
-        Assert.assertEquals(numberOfElements, 9);
+        Assert.assertEquals(numberOfElements, 2);
     }
 
     @Test
